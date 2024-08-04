@@ -1,4 +1,4 @@
-"use client";
+//"use client";
 import { Button, TextArea, TextField } from "@radix-ui/themes";
 
 const NewIssuePage = () => {
