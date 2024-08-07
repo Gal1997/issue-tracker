@@ -1,7 +1,7 @@
-import IssueStatusBadge from "@/app/components/IssueStatusBadge";
+import { IssueStatusBadge } from "@/app/components/index";
 import prisma from "@/prisma/client";
-import { Heading, Card, Text } from "@radix-ui/themes";
-import { notFound, useParams } from "next/navigation";
+import { Card, Heading, Text } from "@radix-ui/themes";
+import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 
 interface Props {
@@ -17,6 +17,7 @@ const IssueDetailPage = async ({ params: { issueID } }: Props) => {
     },
   });
   if (!issue) notFound();
+  //await delay(2000); // Add this to see the loading page
   return (
     <div>
       <Heading className="mb-2">{issue.title}</Heading>
