@@ -12,6 +12,7 @@ import { AiFillExclamationCircle } from "react-icons/ai";
 
 import { z } from "zod";
 import schema from "../../validationSchema";
+import { Issue } from "@prisma/client";
 
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
@@ -19,7 +20,7 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
 
 type IssueFormData = z.infer<typeof schema>;
 
-const IssueForm = () => {
+const IssueForm = ({ issue }: { issue?: Issue }) => {
   const router = useRouter();
   const {
     register,
@@ -58,12 +59,14 @@ const IssueForm = () => {
       )}
       <TextField.Root
         placeholder="Title"
+        defaultValue={issue?.title}
         {...register("title")}
       ></TextField.Root>
       <ErrorMessage>{errors.title?.message}</ErrorMessage>
       <Controller
         name="description"
         control={control}
+        defaultValue={issue?.description}
         render={({ field }) => (
           <SimpleMDE placeholder="Description…" {...field} />
         )}
