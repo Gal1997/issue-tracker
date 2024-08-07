@@ -3,13 +3,8 @@ import { z } from "zod";
 import prisma from "@/prisma/client";
 import schema from "../../validationSchema";
 
-interface issue {
-  title: string;
-  description: string;
-}
-
 export async function POST(request: NextRequest) {
-  const body: issue = await request.json();
+  const body = await request.json();
   const validate = schema.safeParse(body);
   if (!validate.success)
     return NextResponse.json({ error: validate.error.errors }, { status: 400 });
