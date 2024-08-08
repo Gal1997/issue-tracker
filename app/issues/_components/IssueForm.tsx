@@ -1,7 +1,7 @@
 "use client";
 import { ErrorMessage, Spinner } from "@/app/components/index";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Callout, TextField } from "@radix-ui/themes";
+import { AlertDialog, Button, Callout, Flex, TextField } from "@radix-ui/themes";
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";
@@ -72,11 +72,38 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
       />
 
       <ErrorMessage>{errors.description?.message}</ErrorMessage>
+      
+      {/* GOOGLE : If the <button> is inside a <form> , that button will be treated as the "submit" button! */}
 
-      <Button disabled={isSubmitting}>
+      <AlertDialog.Root>
+  <AlertDialog.Trigger>
+  <Button disabled={isSubmitting}>
         {issue ? "Update Issue" : "Submit New Issue"}{' '}
         {isSubmitting && <Spinner />}
       </Button>
+  </AlertDialog.Trigger>
+  <AlertDialog.Content maxWidth="220px">
+    <AlertDialog.Description size="3" style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
+      Are you sure?
+    </AlertDialog.Description>
+
+    <Flex gap="6" mt="4" justify="start">
+      <AlertDialog.Cancel>
+        <Button variant="soft" color="gray" style={{width:"70px"}}>
+          Cancel
+        </Button>
+      </AlertDialog.Cancel>
+      <AlertDialog.Action>
+        <Button variant="solid" color="green" onClick={onSubmit} style={{width:"70px"}}>
+          Yes
+        </Button>
+      </AlertDialog.Action>
+    </Flex>
+  </AlertDialog.Content>
+</AlertDialog.Root>
+
+
+      
     </form>
   );
 };
