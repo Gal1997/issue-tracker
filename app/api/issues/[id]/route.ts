@@ -1,5 +1,6 @@
 import schema from "@/app/validationSchema";
 import prisma from "@/prisma/client";
+import delay from "delay";
 import { NextRequest, NextResponse } from "next/server";
 
 interface Props {
@@ -45,6 +46,8 @@ export async function DELETE(
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(id) },
   });
+
+  // await delay(2000); Shows the delete-issue spinner
 
   if (!issue) {
     return NextResponse.json({ error: "Issue not found" }, { status: 404 });
