@@ -34,7 +34,7 @@ const DeleteIssueButton = ({ issueID }: { issueID: number }) => {
         <AlertDialog.Content maxWidth="330px">
           <AlertDialog.Title>Delete issue</AlertDialog.Title>
           <AlertDialog.Description size="2">
-            {"Are you sure? This cannot be undone."}
+            {"Are you sure? This cannot be undone"}
           </AlertDialog.Description>
 
           <Flex width="220px" mt="5" justify="between">
