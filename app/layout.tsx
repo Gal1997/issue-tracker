@@ -6,6 +6,7 @@ import "@radix-ui/themes/styles.css";
 import { Theme, ThemePanel } from "@radix-ui/themes";
 import "./theme-config.css";
 import AuthProvider from "./api/auth/[...nextauth]/Provider";
+import QueryClientProvider from "./QueryClientProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,13 +27,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body>
-        <AuthProvider>
-          <Theme accentColor="violet">
-            <NavBar />
-            <main className="p-5">{children}</main>
-            {/* <ThemePanel /> This pops up the panel for choosing colors*/}
-          </Theme>
-        </AuthProvider>
+        <QueryClientProvider>
+          <AuthProvider>
+            <Theme accentColor="violet">
+              <NavBar />
+              <main className="p-5">{children}</main>
+              {/* <ThemePanel /> This pops up the panel for choosing colors*/}
+            </Theme>
+          </AuthProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );
