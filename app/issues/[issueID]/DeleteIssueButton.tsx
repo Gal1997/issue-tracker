@@ -24,7 +24,7 @@ const DeleteIssueButton = ({ issueID }: { issueID: number }) => {
   return (
     <div>
       <AlertDialog.Root>
-        <AlertDialog.Trigger>
+        <AlertDialog.Trigger style={{ width: "100%" }}>
           <Button color="red" disabled={isDeleting}>
             <FaRegTrashCan />
             Delete Issue
