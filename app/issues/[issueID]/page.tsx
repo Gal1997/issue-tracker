@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import EditIssueButton from "./EditIssueButton";
 import IssueDetails from "./IssueDetails";
 import DeleteIssueButton from "./DeleteIssueButton";
-import AssigneeSelect from "@/app/api/issues/[id]/AssigneeSelect";
+import AssigneeSelect from "./AssigneeSelect";
 
 interface Props {
   params: { issueID: string };
