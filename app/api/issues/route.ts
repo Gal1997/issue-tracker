@@ -4,14 +4,15 @@ import prisma from "@/prisma/client";
 import schema from "../../validationSchema";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/authOptions";
+import { Issue } from "@prisma/client";
 
 export async function POST(request: NextRequest) {
-  const session = await getServerSession(authOptions);
-  if (!session)
-    return NextResponse.json(
-      { error: "Can't add issue without being logged in." },
-      { status: 401 }
-    );
+  // const session = await getServerSession(authOptions);
+  // if (!session)
+  //   return NextResponse.json(
+  //     { error: "Can't add issue without being logged in." },
+  //     { status: 401 }
+  //   );
 
   const body = await request.json();
   const validate = schema.safeParse(body);
@@ -34,4 +35,9 @@ export async function POST(request: NextRequest) {
   });
 
   return NextResponse.json(newIssue, { status: 201 });
+}
+
+export async function GET(request: NextRequest) {
+  const allIssues = await prisma.issue.findMany();
+  return NextResponse.json(allIssues, { status: 200 });
 }

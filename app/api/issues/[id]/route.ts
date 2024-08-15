@@ -1,4 +1,4 @@
-import schema from "@/app/validationSchema";
+import { patchIssueSchema } from "@/app/validationSchema";
 import prisma from "@/prisma/client";
 import delay from "delay";
 import { getServerSession } from "next-auth";
@@ -13,20 +13,34 @@ export async function PATCH(
   request: NextRequest,
   { params: { id } }: { params: { id: string } }
 ) {
-  const session = await getServerSession(authOptions);
-  if (!session)
-    return NextResponse.json(
-      { error: "Can't patch issue without being logged in." },
-      { status: 401 }
-    );
+  // Requester is logged in
+  // const session = await getServerSession(authOptions);
+  // if (!session)
+  //   return NextResponse.json(
+  //     { error: "Can't patch issue without being logged in." },
+  //     { status: 401 }
+  //   );
+
   const body = await request.json();
-  const validate = schema.safeParse(body);
+  // The request body is valid (by rules we defined)
+  const validate = patchIssueSchema.safeParse(body);
   if (!validate.success)
     return NextResponse.json(
       { error: validate.error.format() },
       { status: 400 }
     );
 
+  const { assignedToUserId, title, description } = body;
+  // The user the issue is assigned to exist in db
+  if (assignedToUserId) {
+    const user = await prisma.user.findUnique({
+      where: { id: assignedToUserId },
+    });
+    if (!user)
+      return NextResponse.json({ error: "Invalid user." }, { status: 400 });
+  }
+
+  // The issue itself , exist in db
   const oldIssue = await prisma.issue.findUnique({
     where: { id: parseInt(id) },
   });
@@ -34,13 +48,15 @@ export async function PATCH(
     return NextResponse.json({ error: "Issue not found" }, { status: 404 });
   }
 
+  // Update the issue and also store the object in 'newIssue' (not necessary)
   const newIssue = await prisma.issue.update({
     where: {
       id: parseInt(id),
     },
     data: {
-      title: body.title,
-      description: body.description,
+      title: title,
+      description: description,
+      assignedToUserId,
     },
   });
 
