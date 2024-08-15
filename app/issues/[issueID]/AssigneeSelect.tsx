@@ -1,13 +1,14 @@
 "use client";
-import { User } from "@prisma/client";
-import { Select } from "@radix-ui/themes";
+import { Issue, User } from "@prisma/client";
+import { Select, Separator } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-const AssigneeSelect = () => {
+const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const {
     data: users,
     isLoading,
@@ -23,7 +24,14 @@ const AssigneeSelect = () => {
   if (error) return null;
 
   return (
-    <Select.Root>
+    <Select.Root
+      defaultValue={issue.assignedToUserId || "null"} // 'null' pulls up the item which value is 'null' , line 46
+      onValueChange={(userId) => {
+        axios.patch("http://localhost:3000/api/issues/" + issue.id, {
+          assignedToUserId: userId !== "null" ? userId : null,
+        });
+      }}
+    >
       <Select.Trigger placeholder="Assign..." style={{ width: "100%" }} />
       <Select.Content>
         <Select.Group>
@@ -34,6 +42,9 @@ const AssigneeSelect = () => {
             </Select.Item>
           ))}
         </Select.Group>
+        <Select.Separator />
+        <Select.Item value="null">Unassigned</Select.Item>{" "}
+        {/* This is line 46 */}
       </Select.Content>
     </Select.Root>
   );

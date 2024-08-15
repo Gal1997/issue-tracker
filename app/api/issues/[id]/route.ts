@@ -14,12 +14,12 @@ export async function PATCH(
   { params: { id } }: { params: { id: string } }
 ) {
   // Requester is logged in
-  // const session = await getServerSession(authOptions);
-  // if (!session)
-  //   return NextResponse.json(
-  //     { error: "Can't patch issue without being logged in." },
-  //     { status: 401 }
-  //   );
+  const session = await getServerSession(authOptions);
+  if (!session)
+    return NextResponse.json(
+      { error: "Can't patch issue without being logged in." },
+      { status: 401 }
+    );
 
   const body = await request.json();
   // The request body is valid (by rules we defined)

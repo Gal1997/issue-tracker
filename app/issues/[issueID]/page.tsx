@@ -26,7 +26,7 @@ const IssueDetailPage = async ({ params: { issueID } }: Props) => {
         <IssueDetails issue={issue} />
       </Box>
       <Box className="space-y-3" width="150px">
-        <AssigneeSelect />
+        <AssigneeSelect issue={issue} />
         <EditIssueButton issueID={parseInt(issueID)} />
         <DeleteIssueButton issueID={parseInt(issueID)} />
       </Box>

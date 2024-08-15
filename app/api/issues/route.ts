@@ -7,18 +7,21 @@ import { authOptions } from "../auth/[...nextauth]/authOptions";
 import { Issue } from "@prisma/client";
 
 export async function POST(request: NextRequest) {
-  // const session = await getServerSession(authOptions);
-  // if (!session)
-  //   return NextResponse.json(
-  //     { error: "Can't add issue without being logged in." },
-  //     { status: 401 }
-  //   );
+  // Requester is logged in
+  const session = await getServerSession(authOptions);
+  if (!session)
+    return NextResponse.json(
+      { error: "Can't add issue without being logged in." },
+      { status: 401 }
+    );
 
   const body = await request.json();
+  // Request is valid by rules we defined
   const validate = schema.safeParse(body);
   if (!validate.success)
     return NextResponse.json({ error: validate.error.errors }, { status: 400 });
 
+  // This issue doesn't already exist (same title = exists)
   const issue = await prisma.issue.findUnique({ where: { title: body.title } });
   if (issue) {
     return NextResponse.json(
@@ -27,6 +30,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  // Create the issue in db
   const newIssue = await prisma.issue.create({
     data: {
       title: body.title,
