@@ -10,38 +10,31 @@ import "react-loading-skeleton/dist/skeleton.css";
 import toast, { Toaster } from "react-hot-toast";
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
-  const {
-    data: users,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["users"],
-    queryFn: () => axios.get<User[]>("/api/users").then((res) => res.data),
-    staleTime: 0,
-    retry: 3,
-  });
+  const { data: users, isLoading, error } = useUsers();
 
   if (isLoading) return <Skeleton height={30} />;
   if (error) return null;
+
+  const assignIssue = (userId: string) => {
+    axios
+      .patch("http://localhost:3000/api/issues/" + issue.id, {
+        assignedToUserId: userId !== "null" ? userId : null,
+      })
+      .then(() => {
+        toast.success("Changes saved");
+      })
+      .catch(() => {
+        toast.error("Changes could not be saved", {
+          position: "top-center",
+        });
+      });
+  };
 
   return (
     <>
       <Select.Root
         defaultValue={issue.assignedToUserId || "null"} // 'null' pulls up the item which value is 'null' , line 46
-        onValueChange={(userId) => {
-          axios
-            .patch("http://localhost:3000/api/issues/" + issue.id, {
-              assignedToUserId: userId !== "null" ? userId : null,
-            })
-            .then(() => {
-              toast.success("Changes saved");
-            })
-            .catch(() => {
-              toast.error("Changes could not be saved", {
-                position: "top-center",
-              });
-            });
-        }}
+        onValueChange={assignIssue}
       >
         <Select.Trigger placeholder="Assign..." style={{ width: "100%" }} />
         <Select.Content>
@@ -62,5 +55,13 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
     </>
   );
 };
+
+const useUsers = () =>
+  useQuery({
+    queryKey: ["users"],
+    queryFn: () => axios.get<User[]>("/api/users").then((res) => res.data),
+    staleTime: 0,
+    retry: 3,
+  });
 
 export default AssigneeSelect;
