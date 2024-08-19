@@ -1,14 +1,23 @@
-import { Button } from "@radix-ui/themes";
+import { Issue } from "@prisma/client";
+import { Button, Flex } from "@radix-ui/themes";
 import Link from "next/link";
 import React from "react";
+import IssueStatusFilter from "./IssueStatusFilter";
 
-const IssueActions = () => {
+interface Props {
+  issues: Issue[];
+}
+
+const IssueActions = ({ issues }: Props) => {
+  async function setFilter(value: string) {}
+
   return (
-    <div className="mb-5">
+    <Flex justify="between">
+      <IssueStatusFilter />
       <Button>
         <Link href="/issues/new">New Issue</Link>
       </Button>
-    </div>
+    </Flex>
   );
 };
 

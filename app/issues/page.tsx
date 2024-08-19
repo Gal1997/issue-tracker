@@ -10,8 +10,8 @@ const Issues = async () => {
   await delay(500);
 
   return (
-    <div className="space-y-10">
-      <IssueActions />
+    <div className="space-y-6">
+      <IssueActions issues={issues} />
       <Table.Root variant="surface" style={{ maxWidth: "60vw" }}>
         <Table.Header>
           <Table.Row>
