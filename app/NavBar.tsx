@@ -21,7 +21,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 const NavBar = () => {
   return (
     <nav className="border-b mb-5 mx-5 my-5 py-1">
-      <Flex justify="between">
+      <Flex justify="between" height={"3rem"}>
         <NavLinks />
         <Flex mr={"1rem"}>
           <AuthStatus />

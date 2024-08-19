@@ -9,7 +9,7 @@ const skeletons = [1, 2, 3, 4, 5, 6];
 
 const LoadingIssuesPage = () => {
   return (
-    <div className="space-y-10">
+    <div className="space-y-6">
       <IssueActions />
       <Table.Root variant="surface" style={{ maxWidth: "60vw" }}>
         <Table.Header>
@@ -28,16 +28,16 @@ const LoadingIssuesPage = () => {
           {skeletons.map((skeleton) => (
             <Table.Row key={skeleton}>
               <Table.Cell>
-                <Skeleton />
+                <Skeleton width={"150px"} />
                 <div className="block md:hidden">
-                  <Skeleton />
+                  <Skeleton width={"150px"} />
                 </div>
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                <Skeleton />
+                <Skeleton width={"150px"} />
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                <Skeleton />
+                <Skeleton width={"150px"} />
               </Table.Cell>
             </Table.Row>
           ))}

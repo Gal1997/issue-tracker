@@ -4,11 +4,7 @@ import Link from "next/link";
 import React from "react";
 import IssueStatusFilter from "./IssueStatusFilter";
 
-interface Props {
-  issues: Issue[];
-}
-
-const IssueActions = ({ issues }: Props) => {
+const IssueActions = () => {
   async function setFilter(value: string) {}
 
   return (
