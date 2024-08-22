@@ -8,7 +8,7 @@ const IssueActions = () => {
   async function setFilter(value: string) {}
 
   return (
-    <Flex justify="between">
+    <Flex justify="between" style={{ maxWidth: "80vw" }}>
       <IssueStatusFilter />
       <Button>
         <Link href="/issues/new">New Issue</Link>
