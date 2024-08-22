@@ -9,7 +9,7 @@ export default function Home() {
     <Pagination
       itemCount={100}
       pageSize={10}
-      currentPage={parseInt(queryParameters.get("page")!)}
+      currentPage={parseInt(queryParameters.get("page")!) || 1}
     />
   );
 }
