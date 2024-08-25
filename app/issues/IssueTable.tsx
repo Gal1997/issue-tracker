@@ -17,7 +17,7 @@ interface Props {
 
 const IssueTable = ({ searchParams, issues }: Props) => {
   return (
-    <Table.Root variant="surface" style={{ maxWidth: "80vw" }}>
+    <Table.Root variant="surface" style={{ maxWidth: "100vw" }}>
       <Table.Header>
         <Table.Row>
           {columns.map((column) => (

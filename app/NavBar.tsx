@@ -20,7 +20,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 const NavBar = () => {
   return (
-    <nav className="border-b mb-1 mx-5 my-5 ">
+    <nav className="border-b pb-2 mx-5 mt-3 mb-1">
       <Flex justify="between" height={"3rem"}>
         <NavLinks />
         <Flex mr={"1rem"}>
@@ -78,7 +78,7 @@ const NavLinks = () => {
     { label: "Issues", href: "/issues" },
   ];
   return (
-    <Flex className="space-x-6">
+    <Flex className="space-x-6" align="center">
       <Link href="/">
         <AiFillBug size={30} />
       </Link>
