@@ -10,23 +10,21 @@ interface counterCard {
   status: Status;
 }
 
-const IssueSummary = async () => {
-  const openCounter = await prisma.issue.count({ where: { status: "OPEN" } });
-  const inProgressCounter = await prisma.issue.count({
-    where: { status: "IN_PROGRESS" },
-  });
-  const closedCounter = await prisma.issue.count({
-    where: { status: "CLOSED" },
-  });
+interface Props {
+  open: number;
+  closed: number;
+  inprogress: number;
+}
 
+const IssueSummary = async ({ open, closed, inprogress }: Props) => {
   const myArray: counterCard[] = [
-    { label: "Open Issues", value: openCounter, status: Status.OPEN },
+    { label: "Open Issues", value: open, status: Status.OPEN },
     {
       label: "In-progress Issues",
-      value: inProgressCounter,
+      value: inprogress,
       status: Status.IN_PROGRESS,
     },
-    { label: "Closed Issues", value: closedCounter, status: Status.CLOSED },
+    { label: "Closed Issues", value: closed, status: Status.CLOSED },
   ];
   return (
     <Flex gap="4">
