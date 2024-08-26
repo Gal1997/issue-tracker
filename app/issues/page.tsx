@@ -4,6 +4,7 @@ import delay from "delay";
 import Pagination from "../components/Pagination";
 import IssueActions from "./IssueActions";
 import IssueTable, { columnNames, IssueQuery } from "./IssueTable";
+import { Metadata } from "next";
 
 interface Props {
   searchParams: IssueQuery;
@@ -50,3 +51,8 @@ const Issues = async ({ searchParams }: Props) => {
 export const dynamic = "force-dynamic";
 
 export default Issues;
+
+export const metadata: Metadata = {
+  title: "Issue List",
+  description: "View all project issues",
+};
