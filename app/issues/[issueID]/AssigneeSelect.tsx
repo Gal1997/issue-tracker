@@ -17,9 +17,13 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
 
   const assignIssue = (userId: string) => {
     axios
-      .patch("http://localhost:3000/api/issues/" + issue.id, {
-        assignedToUserId: userId !== "null" ? userId : null,
-      })
+      .patch(
+        "https://issue-tracker-gal-israelis-projects.vercel.app//api/issues/" +
+          issue.id,
+        {
+          assignedToUserId: userId !== "null" ? userId : null,
+        }
+      )
       .then(() => {
         toast.success("Changes saved");
       })
