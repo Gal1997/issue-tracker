@@ -30,7 +30,7 @@ export async function PATCH(
       { status: 400 }
     );
 
-  const { assignedToUserId, title, description } = body;
+  const { assignedToUserId, title, description, status } = body;
   // The user the issue is assigned to exist in db
   if (assignedToUserId) {
     const user = await prisma.user.findUnique({
@@ -56,6 +56,7 @@ export async function PATCH(
     data: {
       title: title,
       description: description,
+      status: status,
       assignedToUserId,
     },
   });
