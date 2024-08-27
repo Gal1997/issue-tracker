@@ -5,21 +5,26 @@ import EditIssueButton from "./EditIssueButton";
 import IssueDetails from "./IssueDetails";
 import DeleteIssueButton from "./DeleteIssueButton";
 import AssigneeSelect from "./AssigneeSelect";
+import { cache } from "react";
 
 interface Props {
   params: { issueID: string };
 }
 
+const fetchUser = cache((issueId: number) =>
+  prisma.issue.findUnique({
+    where: {
+      id: issueId,
+    },
+  })
+);
+
 const IssueDetailPage = async ({ params: { issueID } }: Props) => {
   const paramsIsNOTaNumber = isNaN(+issueID);
   if (paramsIsNOTaNumber) notFound();
-  const issue = await prisma.issue.findUnique({
-    where: {
-      id: parseInt(issueID),
-    },
-  });
+  const issue = await fetchUser(parseInt(issueID));
   if (!issue) notFound();
-  //await delay(2000); // Add this to see the loading page
+
   return (
     <Grid columns={{ initial: "1", md: "2" }} gap="5">
       <Box>
@@ -35,9 +40,7 @@ const IssueDetailPage = async ({ params: { issueID } }: Props) => {
 };
 
 export async function generateMetadata({ params }: Props) {
-  const issue = await prisma.issue.findUnique({
-    where: { id: parseInt(params.issueID) },
-  });
+  const issue = await fetchUser(parseInt(params.issueID));
   return {
     title: issue?.title,
     description: "Details of issue #" + issue?.id,
