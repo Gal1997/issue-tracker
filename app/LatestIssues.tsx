@@ -24,9 +24,9 @@ const LatestIssues = async () => {
       </Heading>
       <Table.Root>
         <Table.Body>
-          {issues.map(async (issue) => (
+          {issues.map(async (issue, index) => (
             <Table.Row key={issue.id}>
-              <Table.Cell>
+              <Table.Cell style={{ boxShadow: index == 4 ? "none" : "" }}>
                 <Flex align="center" justify="between" pl="2" p="1">
                   <Box className="space-y-1">
                     <Text as="div" size="2" weight="medium">

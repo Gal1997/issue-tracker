@@ -1,16 +1,16 @@
 "use client";
 import { Issue, User } from "@prisma/client";
-import { Select, Separator } from "@radix-ui/themes";
+import { Select } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import toast, { Toaster } from "react-hot-toast";
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const { data: users, isLoading, error } = useUsers();
+  const router = useRouter();
 
   if (isLoading) return <Skeleton height={30} />;
   if (error) return null;
@@ -25,12 +25,14 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
         }
       )
       .then(() => {
-        toast.success("Changes saved");
+        toast.success("Changes saved", { position: "top-center" });
+        router.refresh();
       })
       .catch(() => {
         toast.error("Changes could not be saved", {
           position: "top-center",
         });
+        router.refresh();
       });
   };
 
