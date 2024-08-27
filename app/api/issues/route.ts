@@ -40,9 +40,3 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json(newIssue, { status: 201 });
 }
-
-export async function GET(request: NextRequest) {
-  const allIssues = await prisma.issue.findMany();
-  return NextResponse.json(allIssues, { status: 200 });
-}
-export const dynamic = "force-dynamic";
