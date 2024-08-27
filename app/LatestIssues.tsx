@@ -51,5 +51,5 @@ const LatestIssues = async () => {
     </Card>
   );
 };
-
+export const dynamic = "force-dynamic";
 export default LatestIssues;
