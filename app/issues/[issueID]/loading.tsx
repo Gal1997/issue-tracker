@@ -1,10 +1,6 @@
-import IssueStatusBadge from "@/app/components/IssueStatusBadge";
-import { Heading, Card, Text, Box, Flex } from "@radix-ui/themes";
-import React from "react";
+import { Box, Card, Flex } from "@radix-ui/themes";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import ReactMarkdown from "react-markdown";
-import delay from "delay";
 
 const LoadingIssueDetailPage = async () => {
   return (

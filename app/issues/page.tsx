@@ -1,6 +1,5 @@
 import prisma from "@/prisma/client";
 import { Status } from "@prisma/client";
-import delay from "delay";
 import Pagination from "../components/Pagination";
 import IssueActions from "./IssueActions";
 import IssueTable, { columnNames, IssueQuery } from "./IssueTable";
@@ -31,7 +30,6 @@ const Issues = async ({ searchParams }: Props) => {
     skip: (page - 1) * pageSize,
     take: pageSize,
   });
-  await delay(500);
 
   const issueCount = await prisma.issue.count({ where: { status } });
 
