@@ -22,12 +22,13 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
       })
       .then(() => {
         toast.success("Changes saved", { position: "top-center" });
-        router.refresh();
       })
       .catch(() => {
         toast.error("Changes could not be saved", {
           position: "top-center",
         });
+      })
+      .finally(() => {
         router.refresh();
       });
   };
