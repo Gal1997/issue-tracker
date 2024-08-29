@@ -3,6 +3,5 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const allUsers = await prisma.user.findMany({ orderBy: { name: "asc" } });
-  return NextResponse.json(request.json());
+  return NextResponse.json(allUsers);
 }
-export const dynamic = "force-dynamic";
