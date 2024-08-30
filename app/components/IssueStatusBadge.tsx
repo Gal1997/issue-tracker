@@ -3,7 +3,7 @@ import { Spinner } from "@/app/components";
 import { Issue, Status } from "@prisma/client";
 import { Badge, Tooltip } from "@radix-ui/themes";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const statusMap: Record<
   Status,
@@ -44,6 +44,9 @@ const IssueStatusBadge = ({ status, issueId, title, description }: Props) => {
   const [currentStatus, setCurrentStatus] = useState(status);
   const [isSettingStatus, setIsSettingStatus] = useState(false);
 
+  useEffect(() => {
+    setCurrentStatus(status);
+  }, [status]);
   const handleClick = async () => {
     let newStatus: Status;
     switch (currentStatus) {
