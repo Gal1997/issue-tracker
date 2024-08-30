@@ -1,6 +1,6 @@
 "use client";
 import { Status } from "@prisma/client";
-import { Select } from "@radix-ui/themes";
+import { Box, Select } from "@radix-ui/themes";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
@@ -32,12 +32,10 @@ const IssueStatusFilter = () => {
       <Select.Content>
         <Select.Group>
           {statuses.map(({ value, label }, index) => (
-            <>
-              <Select.Item value={value} key={value}>
-                {label}
-              </Select.Item>
+            <Box key={value}>
+              <Select.Item value={value}>{label}</Select.Item>
               {index == 0 && <Select.Separator />}
-            </>
+            </Box>
           ))}
         </Select.Group>
       </Select.Content>
