@@ -86,6 +86,9 @@ const NavLinks = () => {
         {links.map((link) => (
           <li key={links.indexOf(link)}>
             <Link
+              onClick={(e) => {
+                if (link.href === currentPath) e.preventDefault();
+              }}
               href={link.href}
               className={classname({
                 "!text-zinc-900 font-semibold": link.href === currentPath,
