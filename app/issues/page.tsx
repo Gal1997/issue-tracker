@@ -16,7 +16,7 @@ const Issues = async ({ searchParams }: Props) => {
     : undefined;
 
   const orderBy = columnNames.includes(searchParams.orderBy)
-    ? { [searchParams.orderBy]: "desc" }
+    ? { [searchParams.orderBy]: searchParams.method }
     : undefined;
 
   const page = parseInt(searchParams.page) || 1;

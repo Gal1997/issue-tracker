@@ -3,10 +3,12 @@ import { ArrowUpIcon } from "@radix-ui/react-icons";
 import { Table } from "@radix-ui/themes";
 import { default as Link, default as NextLink } from "next/link";
 import { IssueStatusBadge } from "../components";
+import { useState } from "react";
 
 export interface IssueQuery {
   status: Status;
   orderBy: keyof Issue;
+  method: string;
   page: string;
 }
 
@@ -32,6 +34,7 @@ const IssueTable = ({ searchParams, issues }: Props) => {
                   query: {
                     ...searchParams,
                     orderBy: column.value,
+                    method: searchParams.method == "asc" ? "desc" : "asc",
                   },
                 }}
               >
