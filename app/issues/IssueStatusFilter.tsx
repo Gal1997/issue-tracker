@@ -14,9 +14,12 @@ const statuses: { label: string; value: Status | " " }[] = [
 const IssueStatusFilter = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const statusesValues = Object.values(Status);
+  var status = searchParams.get("status");
+  if (!statusesValues.includes(status as Status)) status = null;
   return (
     <Select.Root
-      defaultValue={searchParams.get("status") || ""}
+      defaultValue={status || ""}
       onValueChange={(status) => {
         const params = new URLSearchParams();
         if (status != " ") params.append("status", status);
