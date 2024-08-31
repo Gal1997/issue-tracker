@@ -8,7 +8,7 @@ import { useState } from "react";
 export interface IssueQuery {
   status: Status;
   orderBy: keyof Issue;
-  method: string;
+  method: "asc" | "desc";
   page: string;
 }
 
