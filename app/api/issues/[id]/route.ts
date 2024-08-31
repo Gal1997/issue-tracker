@@ -1,6 +1,5 @@
 import { patchIssueSchema } from "@/app/validationSchema";
 import prisma from "@/prisma/client";
-import delay from "delay";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../auth/[...nextauth]/authOptions";

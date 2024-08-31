@@ -19,6 +19,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
     axios
       .patch("/api/issues/" + issue.id, {
         assignedToUserId: userId !== "null" ? userId : null,
+        status: userId == "null" ? "OPEN" : "IN_PROGRESS",
       })
       .then(() => {
         toast.success("Changes saved", { position: "top-center" });
