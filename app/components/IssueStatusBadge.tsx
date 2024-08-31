@@ -3,6 +3,7 @@ import { Spinner } from "@/app/components";
 import { Issue, Status } from "@prisma/client";
 import { Badge, Tooltip } from "@radix-ui/themes";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const statusMap: Record<
@@ -43,6 +44,7 @@ type Props = {
 const IssueStatusBadge = ({ status, issueId, title, description }: Props) => {
   const [currentStatus, setCurrentStatus] = useState(status);
   const [isSettingStatus, setIsSettingStatus] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setCurrentStatus(status);
@@ -69,17 +71,21 @@ const IssueStatusBadge = ({ status, issueId, title, description }: Props) => {
 
     try {
       setIsSettingStatus(true);
-      await axios.patch("/api/issues/" + issueId, {
-        title: title,
-        description: description,
-        status: newStatus,
-      });
-      setCurrentStatus(newStatus);
+      await axios
+        .patch("/api/issues/" + issueId, {
+          title: title,
+          description: description,
+          status: newStatus,
+        })
+        .then(() => {
+          setCurrentStatus(newStatus);
+          router.refresh();
+        });
     } catch (error) {
-      setIsSettingStatus(false);
       console.error(error);
+    } finally {
+      setIsSettingStatus(false);
     }
-    setIsSettingStatus(false);
   };
 
   return (
