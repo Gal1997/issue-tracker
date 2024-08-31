@@ -23,6 +23,8 @@ const IssueStatusFilter = () => {
       onValueChange={(status) => {
         const params = new URLSearchParams();
         if (status != " ") params.append("status", status);
+        if (searchParams.get("pageSize"))
+          params.append("pageSize", searchParams.get("pageSize")!);
         if (searchParams.get("orderBy"))
           params.append("orderBy", searchParams.get("orderBy")!);
         if (searchParams.get("method"))

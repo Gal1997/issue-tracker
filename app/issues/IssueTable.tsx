@@ -9,6 +9,7 @@ export interface IssueQuery {
   status: Status;
   orderBy: keyof Issue;
   method: "asc" | "desc";
+  pageSize: string;
   page: string;
 }
 

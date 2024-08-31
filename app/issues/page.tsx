@@ -4,6 +4,7 @@ import Pagination from "../components/Pagination";
 import IssueActions from "./IssueActions";
 import IssueTable, { columnNames, IssueQuery } from "./IssueTable";
 import { Metadata } from "next";
+import CustomPageSize from "../components/CustomPageSize";
 
 interface Props {
   searchParams: IssueQuery;
@@ -24,8 +25,7 @@ const Issues = async ({ searchParams }: Props) => {
     : undefined;
 
   const page = parseInt(searchParams.page) || 1;
-  const pageSize = 10;
-
+  const pageSize = parseInt(searchParams.pageSize) || 10;
   const issues = await prisma.issue.findMany({
     where: {
       status: status,
@@ -46,6 +46,7 @@ const Issues = async ({ searchParams }: Props) => {
         currentPage={page}
         itemCount={issueCount}
       ></Pagination>
+      <CustomPageSize totalNumOfIssue={await prisma.issue.count()} />
     </div>
   );
 };
