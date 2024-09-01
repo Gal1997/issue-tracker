@@ -11,7 +11,7 @@ const LoadingIssuesPage = () => {
   return (
     <div className="space-y-6">
       <IssueActions />
-      <Table.Root variant="surface" style={{ maxWidth: "60vw" }}>
+      <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeaderCell>Issue</Table.ColumnHeaderCell>
@@ -20,6 +20,9 @@ const LoadingIssuesPage = () => {
             </Table.ColumnHeaderCell>
             <Table.ColumnHeaderCell className="hidden md:table-cell">
               Created
+            </Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell className="hidden md:table-cell">
+              Assigned To
             </Table.ColumnHeaderCell>
           </Table.Row>
         </Table.Header>
@@ -32,6 +35,9 @@ const LoadingIssuesPage = () => {
                 <div className="block md:hidden">
                   <Skeleton width={"150px"} />
                 </div>
+              </Table.Cell>
+              <Table.Cell className="hidden md:table-cell">
+                <Skeleton width={"150px"} />
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
                 <Skeleton width={"150px"} />
