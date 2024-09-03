@@ -22,6 +22,15 @@ model Issue {
   assignedToUser   User?    @relation(fields: [assignedToUserId], references: [id])
 }
 
+model Comment {
+  id                Int      @id @default(autoincrement())
+  message           String   @db.Text()
+  createdAt         DateTime @default(now())
+  assignedToIssueId Int
+  madeByUserEmail   String
+  madeByUser        User     @relation(fields: [madeByUserEmail], references: [email])
+}
+
 enum Status {
   OPEN
   IN_PROGRESS
@@ -67,6 +76,7 @@ model User {
   accounts       Account[]
   sessions       Session[]
   assignedIssues Issue[]
+  Comment        Comment[]
 
   @@map("users")
 }

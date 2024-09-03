@@ -27,13 +27,7 @@ const AddComment = () => {
       setisSubmitting(true);
 
       alert(data.comment);
-      // if (!issue) var result = await axios.post("/api/issues", data); // New issue
-      // else var result = await axios.patch(`/api/issues/${issue.id}`, data); // Update issue
-      // console.log(result.status);
 
-      // if (result.status == 200 || result.status == 201) {
-      //   router.push("/issues");
-      //   router.refresh();
       // }
     } catch (error) {
       setisSubmitting(false);
