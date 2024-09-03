@@ -40,7 +40,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
         defaultValue={issue.assignedToUserId || "null"} // 'null' pulls up the item which value is 'null' , line 46
         onValueChange={assignIssue}
       >
-        <Select.Trigger placeholder="Assign..." style={{ width: "100%" }} />
+        <Select.Trigger placeholder="Assign..." style={{ width: "80%" }} />
         <Select.Content>
           <Select.Group>
             <Select.Label>Suggestions</Select.Label>

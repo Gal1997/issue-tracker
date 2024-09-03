@@ -6,7 +6,7 @@ import React from "react";
 const EditIssueButton = ({ issueID }: { issueID: number }) => {
   return (
     <Box>
-      <Button style={{ width: "100%" }}>
+      <Button style={{ width: "130px" }}>
         <Pencil2Icon />
         <Link href={"/issues/" + issueID + "/edit"}>Edit Issue</Link>
       </Button>
