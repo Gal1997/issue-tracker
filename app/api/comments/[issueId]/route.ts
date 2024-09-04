@@ -24,11 +24,11 @@ export async function POST(
 ) {
   // Requester is logged in
   const session = await getServerSession(authOptions);
-  //   if (!session)
-  //     return NextResponse.json(
-  //       { error: "Can't add issue without being logged in." },
-  //       { status: 401 }
-  //     );
+  if (!session)
+    return NextResponse.json(
+      { error: "Can't add issue without being logged in." },
+      { status: 401 }
+    );
   const body = await request.json();
   const { message, assignedToIssueId, madeByEmail } = body;
 
