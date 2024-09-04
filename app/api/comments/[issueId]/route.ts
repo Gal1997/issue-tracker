@@ -7,16 +7,16 @@ interface Props {
   params: { id: string };
 }
 
-export async function GET(
-  //request: NextRequest,
-  { params: { id } }: { params: { id: string } }
-) {
-  const allCommentsOfSpecificIssue = await prisma.comments.findMany({
-    where: { assignedToIssueId: id },
-    orderBy: { createdAt: "asc" },
-  });
-  return NextResponse.json(allCommentsOfSpecificIssue);
-}
+// export async function GET(
+//   //request: NextRequest,
+//   { params: { id } }: { params: { id: string } }
+// ) {
+//   const allCommentsOfSpecificIssue = await prisma.comments.findMany({
+//     where: { assignedToIssueId: id },
+//     orderBy: { createdAt: "asc" },
+//   });
+//   return NextResponse.json(allCommentsOfSpecificIssue);
+// }
 
 export async function POST(
   request: NextRequest,
