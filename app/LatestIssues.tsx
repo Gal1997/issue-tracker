@@ -34,13 +34,26 @@ const LatestIssues = async () => {
                     </Text>
                     <IssueStatusBadge status={issue.status} />
                   </Box>
-
-                  <Avatar
-                    src={issue.assignedToUser?.image!}
-                    fallback="?"
-                    size="2"
-                    radius="full"
-                  />
+                  <Flex
+                    direction="column"
+                    align="center"
+                    className="space-y-1"
+                    width="70px"
+                  >
+                    <Text
+                      color="gray"
+                      size="1"
+                      style={{ display: index == 0 ? "inherit" : "none" }}
+                    >
+                      Assigned to{" "}
+                    </Text>
+                    <Avatar
+                      src={issue.assignedToUser?.image!}
+                      fallback="?"
+                      size="4"
+                      radius="full"
+                    />
+                  </Flex>
                 </Flex>
               </Table.Cell>
             </Table.Row>

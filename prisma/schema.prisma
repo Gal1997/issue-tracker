@@ -20,15 +20,19 @@ model Issue {
   updatedAt        DateTime @updatedAt // Prisma Feature : Automatically stores the time when a record was last updated.
   assignedToUserId String?  @db.VarChar(255)
   assignedToUser   User?    @relation(fields: [assignedToUserId], references: [id])
+
+  @@index([assignedToUserId])
 }
 
-model Comment {
+model Comments {
   id                Int      @id @default(autoincrement())
   message           String   @db.Text()
   createdAt         DateTime @default(now())
-  assignedToIssueId Int
-  madeByUserEmail   String
-  madeByUser        User     @relation(fields: [madeByUserEmail], references: [email])
+  madeByEmail       String
+  assignedToIssueId String
+  madeByUser        User     @relation(fields: [madeByEmail], references: [email])
+
+  @@index([madeByEmail])
 }
 
 enum Status {
@@ -68,15 +72,15 @@ model Session {
 }
 
 model User {
-  id             String    @id @default(cuid())
-  name           String?
-  email          String?   @unique
-  emailVerified  DateTime? @map("email_verified")
-  image          String?
-  accounts       Account[]
-  sessions       Session[]
-  assignedIssues Issue[]
-  Comment        Comment[]
+  id                 String     @id @default(cuid())
+  name               String?
+  email              String     @unique
+  emailVerified      DateTime?  @map("email_verified")
+  image              String?
+  accounts           Account[]
+  sessions           Session[]
+  assignedIssues     Issue[]
+  CommentsMadeByUser Comments[]
 
   @@map("users")
 }

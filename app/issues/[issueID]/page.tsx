@@ -8,7 +8,6 @@ import EditIssueButton from "./EditIssueButton";
 import IssueDetails from "./IssueDetails";
 import Comment from "@/app/components/Comment";
 import AddComment from "@/app/components/AddComment";
-import { CommentType } from "@/app/components/Comment";
 
 interface Props {
   params: { issueID: string };
@@ -24,23 +23,28 @@ const fetchUser = cache((issueId: number) =>
 
 const IssueDetailPage = async ({ params: { issueID } }: Props) => {
   const paramsIsNOTaNumber = isNaN(+issueID);
-  const comments: CommentType[] = [
-    {
-      id: 1,
-      description: "This is my comment",
-      fromUser: "galisraeli97@gmail.com",
-      image:
-        "https://lh3.googleusercontent.com/a/ACg8ocKr-CTPa9HdA-H4sYB7QhhFalA3XZ_JkKySu40k7_hMsnmZZg=s96-c",
-    },
-    {
-      id: 2,
-      description:
-        "This is another comment that happens to be very long to test how long comments look",
-      fromUser: "nockout10@gmail.com",
-      image:
-        "https://lh3.googleusercontent.com/a/ACg8ocICtgBUzRG4n2Ws9h02T2n8fYGq31oxsP1S1xDtQOn2Dnv4XHk=s96-c",
-    },
-  ];
+  const comments = await prisma.comments.findMany({
+    where: { assignedToIssueId: issueID },
+    include: { madeByUser: true },
+  });
+
+  // const comments: CommentType[] = [
+  //   {
+  //     id: 1,
+  //     description: "This is my comment",
+  //     fromUser: "galisraeli97@gmail.com",
+  //     image:
+  //       "https://lh3.googleusercontent.com/a/ACg8ocKr-CTPa9HdA-H4sYB7QhhFalA3XZ_JkKySu40k7_hMsnmZZg=s96-c",
+  //   },
+  //   {
+  //     id: 2,
+  //     description:
+  //       "This is another comment that happens to be very long to test how long comments look",
+  //     fromUser: "nockout10@gmail.com",
+  //     image:
+  //       "https://lh3.googleusercontent.com/a/ACg8ocICtgBUzRG4n2Ws9h02T2n8fYGq31oxsP1S1xDtQOn2Dnv4XHk=s96-c",
+  //   },
+  // ];
   if (paramsIsNOTaNumber) notFound();
   const issue = await fetchUser(parseInt(issueID));
   if (!issue) notFound();
@@ -68,11 +72,11 @@ const IssueDetailPage = async ({ params: { issueID } }: Props) => {
       </Grid>
 
       <Flex mt="7" direction="column">
-        <AddComment />
+        <AddComment issueID={issueID} />
       </Flex>
       <Flex mt="6" direction="column" gap="5">
         {comments.map((comment) => (
-          <Comment {...comment} key={comment.id} />
+          <Comment {...{ comment: comment }} key={comment.id} />
         ))}
       </Flex>
     </>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   TextArea,
@@ -11,27 +11,47 @@ import {
 } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
 import { AiFillExclamationCircle } from "react-icons/ai";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import prisma from "@/prisma/client";
+import axios from "axios";
 
-const AddComment = () => {
+interface Props {
+  issueID: string;
+}
+
+const AddComment = ({ issueID }: Props) => {
+  const { data: session } = useSession();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  const router = useRouter();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setisSubmitting] = useState(false);
+  const [open, setOpen] = useState(false);
   const onSubmit = handleSubmit(async (data) => {
     try {
+      setOpen(false);
       setisSubmitting(true);
+      const comment = {
+        message: message.toString(),
+        assignedToIssueId: issueID,
+        madeByEmail: session!.user!.email,
+      };
 
-      alert(data.comment);
+      var result = await axios.post(`/api/comments/${issueID}`, comment); // Update issue
 
-      // }
+      if (result.status == 200 || result.status == 201) {
+        setMessage("");
+        router.refresh();
+      }
     } catch (error) {
-      setisSubmitting(false);
       setError(`An unexpected error occurred`);
+      alert(error);
     } finally {
       setisSubmitting(false);
     }
@@ -54,11 +74,12 @@ const AddComment = () => {
           placeholder="Write your comment here..."
           {...register("comment")}
           onChange={(e) => setMessage(e.target.value)}
+          value={message}
         ></TextArea>
 
         {/* GOOGLE : If the <button> is inside a <form> , that button will be treated as the "submit" button! */}
 
-        <AlertDialog.Root>
+        <AlertDialog.Root open={open} onOpenChange={setOpen}>
           <AlertDialog.Trigger>
             <Button disabled={message.length == 0 || isSubmitting}>
               {"Submit"}

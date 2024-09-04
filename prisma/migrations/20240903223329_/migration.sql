@@ -9,6 +9,19 @@ CREATE TABLE `Issue` (
     `assignedToUserId` VARCHAR(255) NULL,
 
     UNIQUE INDEX `Issue_title_key`(`title`),
+    INDEX `Issue_assignedToUserId_idx`(`assignedToUserId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Comments` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `message` TEXT NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `madeByEmail` VARCHAR(191) NOT NULL,
+    `assignedToIssueId` VARCHAR(191) NOT NULL,
+
+    INDEX `Comments_madeByEmail_idx`(`madeByEmail`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -46,7 +59,7 @@ CREATE TABLE `sessions` (
 CREATE TABLE `users` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NULL,
-    `email` VARCHAR(191) NULL,
+    `email` VARCHAR(191) NOT NULL,
     `email_verified` DATETIME(3) NULL,
     `image` VARCHAR(191) NULL,
 
@@ -62,12 +75,3 @@ CREATE TABLE `verificationtokens` (
 
     UNIQUE INDEX `verificationtokens_identifier_token_key`(`identifier`, `token`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- AddForeignKey
-ALTER TABLE `Issue` ADD CONSTRAINT `Issue_assignedToUserId_fkey` FOREIGN KEY (`assignedToUserId`) REFERENCES `users`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `accounts` ADD CONSTRAINT `accounts_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `sessions` ADD CONSTRAINT `sessions_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
